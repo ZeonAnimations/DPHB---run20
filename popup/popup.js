@@ -551,7 +551,7 @@ export class ShowPatternButtons extends LitElement {
                 // Generate the HTML text.
                 return html`
                     <h3 title="${currentPatternInfo.info}">
-                        <a href="">${this._visiblePatterns[idx].patternName}</a>
+                        <a href="https://pattern-website.vercel.app/" target="_blank">${this._visiblePatterns[idx].patternName}</a>
                     </h3>`;
             }
         }
