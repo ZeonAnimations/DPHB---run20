@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "Nexus",
+    "description": "Dark pattern decetorator",
+    "version": "1.0",
+    "icons": {
+        "500": "images/icon500.jpg"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/content.js"
+            ],
+            "css": [
+                "stylesheets/style.css"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup/popup.html"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "scripts/constants.js"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ]
+        }
+    ],
+    "default_locale": "en",
+    "background": {
+        "service_worker": "background.js"
+    }
+}
