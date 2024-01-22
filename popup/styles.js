@@ -40,7 +40,7 @@ export const patternLinkStyles = css`
 
 export const actionButtonStyles = css`
     div span {
-        color: #217284;
+        color: white;
         font-weight: bold;
         cursor: pointer;
         text-decoration: none;
