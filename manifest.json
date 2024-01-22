@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Nexus",
-    "description": "Dark pattern decetorator",
+    "description": "Dark pattern detector",
     "version": "1.0",
     "icons": {
         "500": "images/icon500.jpg"
