@@ -50,7 +50,6 @@ async function getCurrentTab() {
  * @extends LitElement
  */
 export class ExtensionPopup extends LitElement {
-    // From the Lit documentation (https://lit.dev/docs/components/properties/):
     // "Reactive properties are properties that can trigger the reactive update cycle when changed,
     // re-rendering the component, and optionally be read or written to attributes.".
     static properties = {
@@ -99,7 +98,6 @@ export class ExtensionPopup extends LitElement {
     }
 
     /**
-     * From the Lit documentation (https://lit.dev/docs/components/lifecycle/):
      * "Called after the element's DOM has been updated the first time, immediately before `updated()` is called.".
      * This function is used to load and set the activation state and results.
      * Since asynchronous methods are used for this, this is not done in the constructor.
@@ -577,7 +575,6 @@ export class ShowPatternButtons extends LitElement {
     }
 
     /**
-     * From the Lit documentation (https://lit.dev/docs/components/lifecycle/):
      * "Called before `update()` to compute values needed during the update.".
      * Used here to react to changes in the `results` before the component is rendered.
      * @param {Map} changedProperties

@@ -7,15 +7,6 @@ const brw = chrome;
 
 /**
  * Configuration of the pattern detection functions.
- * The following attributes must be specified for each pattern.
- *  - `name`: The name of the pattern that will be displayed on the UI.
- *  - `className`: A valid CSS class name for the pattern (used only internally and not displayed).
- *  - `detectionFunctions`: An array of functions `f(node, nodeOld)` to detect the pattern.
- *      Parameters of the functions are the HTML node to be examined in current and previous state (in this order).
- *      The functions must return `true` if the pattern was detected and `false` if not.
- *  - `infoUrl`: The URL to the explanation of the pattern on the `dapde.de` website.
- *  - `info`: A brief explanation of the pattern.
- *  - `languages`: An array of ISO 639-1 codes of the languages supported by the detection functions..
  * @constant
  * @type {{
  *  patterns: Array.<{
@@ -79,11 +70,7 @@ export const patternConfig = {
                             // Example: `"23:59:58"` -> `["23", "59", "58"]`.
                             let numbersNew = matchesNew[i].match(/\d+/gi);
                             let numbersOld = matchesOld[i].match(/\d+/gi);
-
-                            // If the number of each number does not match,
-                            // then the pair of countdowns does not match.
                             if (numbersNew.length != numbersOld.length) {
-                                // Ignore this pair and examine at the next one.
                                 continue;
                             }
 

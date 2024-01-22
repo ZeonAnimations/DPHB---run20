@@ -146,14 +146,12 @@ brw.runtime.onMessage.addListener(
 
         // In order for the sender to wait for a response,
         // `true` must be returned in order to use `sendResponse()` asynchronously.
-        // See https://developer.chrome.com/docs/extensions/mv3/messaging/#simple.
         return true;
     }
 );
 
 // Add an event handler that handles tab ID changes.
 // It is not really clear when and how often this event occurs.
-// The documentation states the following (https://developer.chrome.com/docs/extensions/reference/tabs/#event-onReplaced):
 // "Fired when a tab is replaced with another tab due to prerendering or instant.".
 brw.tabs.onReplaced.addListener(async function (addedTabId, removedTabId) {
     // Save the activation state of the old tab ID for the new tab ID.
@@ -226,7 +224,6 @@ function displayPatternCount(count, tabId) {
     let bgColor = [255, 0, 0, 255];
     // If no patterns were detected, change the background color to green.
     if (count == 0) {
-        // // Set the background color of the icon text to green.
         bgColor = [0, 255, 0, 255];
     }
     // Set the background color for the icon text of the specified tab.
