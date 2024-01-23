@@ -24,6 +24,9 @@ export const patternConfig = {
         {
             /**
              * Countdown Pattern.
+             * Countdown patterns induce (truthfully or falsely) the impression that a product or service is only available for a certain period of time.
+             * This is illustrated through a running clock or a lapsing bar.
+             * You can watch as the desired good slips away.
              */
             name: brw.i18n.getMessage("patternCountdown_name"),
             className: "countdown",
@@ -104,13 +107,22 @@ export const patternConfig = {
             ]
         },
         {
-            /**
+             /**
              * Scarcity Pattern.
+             * The Scarcity Pattern induces (truthfully or falsely) the impression that goods or services are only available in limited numbers.
+             * The pattern suggests: Buy quickly, otherwise the beautiful product will be gone!
+             * Scarcity Patterns are also used in versions where the alleged scarcity is simply invented or
+             * where it is not made clear whether the limited availability relates to the product as a whole or only to the contingent of the portal visited.
              */
             name: brw.i18n.getMessage("patternScarcity_name"),
             className: "scarcity",
             detectionFunctions: [
                 function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element,
+                    // using a regular expression for the scarcity pattern with English words.
+                    // The regular expression checks whether a number is followed by one of several keywords
+                    // or alternatively if the word group 'last/final article/item' is present.
+                    // The previous state of the element is not used.
                     // Example: "10 pieces available"
                     //          "99% claimed"
                     return /\d+\s*(?:\%|pieces?|pcs\.?|pc\.?|ct\.?|items?)?\s*(?:available|sold|claimed|redeemed)|(?:last|final)\s*(?:article|item)/i.test(node.innerText);
@@ -125,12 +137,19 @@ export const patternConfig = {
         {
             /**
              * Social Proof Pattern.
+             * Social Proof is another Dark Pattern of this category.
+             * Positive product reviews or activity reports from other users are displayed directly.
+             * Often, these reviews or reports are simply made up.
+             * But authentic reviews or reports also influence the purchase decision through smart selection and placement.
              */
             name: brw.i18n.getMessage("patternSocialProof_name"),
             className: "social-proof",
             detectionFunctions: [
                 function (node, nodeOld) {
-
+                    // Return true if a match is found in the current text of the element,
+                    // using a regular expression for the social proof pattern with English words.
+                    // The regular expression checks whether a number is followed by a combination of different keywords.
+                    // The previous state of the element is not used.
                     // Example: "5 other customers also bought this article"
                     //          "6 buyers have rated the following products [with 5 stars]"
                     return /\d+\s*(?:other)?\s*(?:customers?|clients?|buyers?|users?|shoppers?|purchasers?|people)\s*(?:have\s+)?\s*(?:(?:also\s*)?(?:bought|purchased|ordered)|(?:rated|reviewed))\s*(?:this|the\s*following)\s*(?:product|article|item)s?/i.test(node.innerText);
@@ -142,6 +161,51 @@ export const patternConfig = {
                 "en"
             ]
         },
+        {
+            /**
+             * Forced Continuity Pattern (adapted to German web pages).
+             * The Forced Continuity pattern automatically renews free or low-cost trial subscriptions - but for a fee or at a higher price.
+             * The design trick is that the order form visually suggests that there is no charge and conceals the (automatic) follow-up costs.
+             */
+            name: brw.i18n.getMessage("patternForcedContinuity_name"),
+            className: "forced-continuity",
+            detectionFunctions: [
+                function (node, nodeOld) {
+                    // Return true if a match is found in the current text of the element,
+                    // using multiple regular expressions for the forced proof continuity with English words.
+                    // The regular expressions check if one of three combinations of a price specification
+                    // in Euro, Dollar or Pound and the specification of a month is present.
+                    // The previous state of the element is not used.
+                    if (/(?:(?:₹|INR|GBP|£|\$|USD)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|₹|INR|GBP|£|pounds?(?:\s*sterling)?|\$|USD|dollars?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)\s*(?:after|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
+                        // Example: "$10.99/month after"
+                        //          "11 GBP a month from month 4"
+                        return true;
+                    }
+                    if (/(?:(?:₹|INR|GBP|£|\$|USD)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|₹|INR|GBP|£|pounds?(?:\s*sterling)?|\$|USD|dollars?))\s*(?:after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*(?:months?|days?)|from\s*(?:month|day)\s*\d+)/i.test(node.innerText)) {
+                        // Example: "$10.99 after 12 months"
+                        //          "11 GBP from month 4"
+                        return true;
+                    }
+                    if (/(?:after\s*that|then|afterwards|subsequently)\s*(?:(?:₹|INR|GBP|£|\$|USD)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|₹|INR|GBP|£|pounds?(?:\s*sterling)?|\$|USD|dollars?))\s*(?:(?:(?:per|\/|a)\s*month)|(?:p|\/)m)/i.test(node.innerText)) {
+                        // Example: "after that $23.99 per month"
+                        //          "then GBP 10pm"
+                        return true;
+                    }
+                    if (/after\s*(?:the)?\s*\d+(?:th|nd|rd|th)?\s*months?\s*(?:only|just)?\s*(?:(?:₹|INR|GBP|£|\$|USD)\s*\d+(?:\.\d{2})?|\d+(?:\.\d{2})?\s*(?:rupees?|₹|INR|GBP|£|pounds?(?:\s*sterling)?|\$|USD|dollars?))/i.test(node.innerText)) {
+                        // Example: "after the 24th months only €23.99"
+                        //          "after 6 months $10"
+                        return true;
+                    }
+                    // Return `false` if no regular expression matches.
+                    return false;
+                }
+            ],
+            infoUrl: brw.i18n.getMessage("patternForcedContinuity_infoUrl"),
+            info: brw.i18n.getMessage("patternForcedContinuity_info"),
+            languages: [
+                "en"
+            ]
+        }
     ]
 }
 
